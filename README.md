@@ -32,3 +32,10 @@ Here I am caching 10 jokes, you can do as many as you want.
 ``chuck``
 
 This will give you one of the above jokes!
+
+
+Gopher Image: https://gopherize.me/
+
+Chuck Norris Jokes: https://api.chucknorris.io/
+
+Thanks to them things became easy!
