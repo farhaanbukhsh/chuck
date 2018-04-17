@@ -1,3 +1,4 @@
+![Chuck](thumb-chuck-go.png)
 CHUCK
 =====
 
@@ -10,12 +11,20 @@ This uses a ``sqlite3`` driver, with go you can use ``go get``.
 
 ``go get -u github.com/mattn/go-sqlite3``
 
-## Usage
+## Install
 
 ``go get -u github.com/farhaanbukhsh/chuck``
-``go build``
+
+`` cd $GOPATH/src/github.com/farhaanbukhsh/chuck``
+
+``go install``
+
+Note: ```Make sure you have GOPATH set and $GOPATH/bin added to the $PATH variable```
+
+## Usage
 
 First you need to cache some jokes, (You need internet for this)
+
 ``chuck --index=10``
 
 Here I am caching 10 jokes, you can do as many as you want.
