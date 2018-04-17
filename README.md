@@ -4,7 +4,6 @@ CHUCK
 
 This is a fun utility which basically gives **Chuck Norris** jokes on demand.
 
-## Set Up
 ## Install
 
 ``go get -u github.com/farhaanbukhsh/chuck``
