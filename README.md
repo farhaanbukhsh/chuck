@@ -5,12 +5,6 @@ CHUCK
 This is a fun utility which basically gives **Chuck Norris** jokes on demand.
 
 ## Set Up
-
-This uses a ``sqlite3`` driver, with go you can use ``go get``.
-
-
-``go get -u github.com/mattn/go-sqlite3``
-
 ## Install
 
 ``go get -u github.com/farhaanbukhsh/chuck``
