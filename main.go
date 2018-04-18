@@ -19,13 +19,18 @@ const chuckAPI = "http://api.chucknorris.io/jokes/random"
 
 // Chucknorris is the struct used to  unmarshal the JSON response from the URL
 type Chucknorris struct {
-	Category string `json:"category"`
-	IconURL  string `json:"icon_url"`
-	ID       string `json:"id"`
-	URL      string `json:"url"`
-	Value    string `json:"value"`
+	Category []string `json:"category"`
+	IconURL  string   `json:"icon_url"`
+	ID       string   `json:"id"`
+	URL      string   `json:"url"`
+	Value    string   `json:"value"`
 }
 
+/*  getJokes takes the API url as the parameter and fetch jokes from it,
+ *   here we have assumed it to be of ChuckNorris type
+ */
+
+//TODO: Remove the dependency on the hardcoded struct
 func getJokes(URL string) (string, error) {
 	req, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
