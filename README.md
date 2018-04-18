@@ -8,10 +8,6 @@ This is a fun utility which basically gives **Chuck Norris** jokes on demand.
 
 ``go get -u github.com/farhaanbukhsh/chuck``
 
-`` cd $GOPATH/src/github.com/farhaanbukhsh/chuck``
-
-``go install``
-
 Note: ```Make sure you have GOPATH set and $GOPATH/bin added to the $PATH variable```
 
 ## Usage
