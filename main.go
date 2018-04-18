@@ -51,23 +51,29 @@ func getJokes(URL string) (string, error) {
 
 	var joke Chucknorris
 	if err = json.Unmarshal(respData, &joke); err != nil {
-		return "", fmt.Errorf("Error in unmarsheling")
+		return "", fmt.Errorf("Error in unmarsheling, %v", err)
 	}
 
 	return joke.Value, nil
 }
 
+// Check if the Database exist if it does, then flushes it off
 func deleteExistingDatabase(name string) error {
-	var err error
-	if _, err := os.Stat(name); err == nil {
+	_, err := os.Stat(name)
+	if !os.IsNotExist(err) {
+		fmt.Printf("file exist")
 		if err := os.Remove(name); err != nil {
 			return fmt.Errorf("Can't Delete file: %v", err)
 		}
-		return nil
 	}
-	return fmt.Errorf("Database file error %v", err)
+	return nil
 }
 
+/*
+ * cacheUpJokes queries for the joke and stores it in the Database, the parameter it is,
+ * numberOfJokes, i.e the number of jokes that has to be stored, every joke has a joke id(jid)
+ * and the joke itself, this is stored in the db.
+ */
 func cacheUpJokes(numberOfJokes int) error {
 
 	if err := deleteExistingDatabase("./jokes.db"); err != nil {
@@ -93,7 +99,7 @@ func cacheUpJokes(numberOfJokes int) error {
 	for i := 1; i <= numberOfJokes; i++ {
 		joke, err := getJokes(chuckAPI)
 		if err != nil {
-			return fmt.Errorf("Jokes couldn't be fetched")
+			return fmt.Errorf("Jokes couldn't be fetched, %v", err)
 		}
 
 		_, err = stmt.Exec(i, joke)
@@ -127,7 +133,7 @@ func fetchJoke() (string, error) {
 	}
 
 	rand.Seed(time.Now().Unix())
-	randNum := rand.Intn(count)
+	randNum := rand.Intn(count-1) + 1
 
 	stm, err := db.Prepare("SELECT joke FROM jokes where jid = ?")
 	if err != nil {
@@ -140,8 +146,7 @@ func fetchJoke() (string, error) {
 	}
 
 	for res.Next() {
-		err = res.Scan(&joke)
-		if err != nil {
+		if err = res.Scan(&joke); err != nil {
 			return "", fmt.Errorf("No jokes found")
 		}
 	}
@@ -160,7 +165,7 @@ func main() {
 	} else {
 		joke, err := fetchJoke()
 		if err != nil {
-			fmt.Println("No jokes found did you cache it by chuck --index=5")
+			fmt.Printf("No jokes found did you cache it by chuck --index=5 %v", err)
 			os.Exit(2)
 		}
 		fmt.Println(joke)
