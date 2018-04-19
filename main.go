@@ -61,7 +61,6 @@ func getJokes(URL string) (string, error) {
 func deleteExistingDatabase(name string) error {
 	_, err := os.Stat(name)
 	if !os.IsNotExist(err) {
-		fmt.Printf("file exist")
 		if err := os.Remove(name); err != nil {
 			return fmt.Errorf("Can't Delete file: %v", err)
 		}
