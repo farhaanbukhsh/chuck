@@ -17,6 +17,9 @@ import (
 
 const chuckAPI = "http://api.chucknorris.io/jokes/random"
 
+var home = os.Getenv("HOME")
+var dbLocation = home + "/.jokesdb"
+
 // Chucknorris is the struct used to  unmarshal the JSON response from the URL
 type Chucknorris struct {
 	Category []string `json:"category"`
@@ -75,11 +78,11 @@ func deleteExistingDatabase(name string) error {
  */
 func cacheUpJokes(numberOfJokes int) error {
 
-	if err := deleteExistingDatabase("./jokes.db"); err != nil {
+	if err := deleteExistingDatabase(dbLocation); err != nil {
 		return fmt.Errorf("Cannot delete old database, %v", err)
 	}
 
-	db, err := sql.Open("sqlite3", "./jokes.db")
+	db, err := sql.Open("sqlite3", dbLocation)
 	if err != nil {
 		return fmt.Errorf("Couldn't make DB, %v", err)
 	}
@@ -110,7 +113,7 @@ func cacheUpJokes(numberOfJokes int) error {
 }
 
 func fetchJoke() (string, error) {
-	db, err := sql.Open("sqlite3", "./jokes.db")
+	db, err := sql.Open("sqlite3", dbLocation)
 	defer db.Close()
 	var count int
 	var joke string
